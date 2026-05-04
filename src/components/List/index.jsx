@@ -1,23 +1,24 @@
-import Item from "../Item";
+import Producto from "../Item";
 
-const List = ({ productos, onDelete }) => {
-  // Si no hay productos, se muestra un mensaje
+const Lista = ({ productos, onEliminar, onToggle }) => {
+  // Si no hay productos, se muestra un mensaje en vez de la lista vacía
   if (productos.length === 0) {
-    return <p style={{ color: "#666", fontStyle: "italic" }}>La lista está vacía.</p>;
+    return <p className="lista-vacia">La lista está vacía. ¡Añade productos!</p>;
   }
 
   return (
-    <ul style={{ listStyle: "none", padding: 0 }}>
-      {/* Se recorre el array y por cada producto se renderiza un <Item /> */}
+    <ul className="lista">
+      {/* Se recorre el array y se renderiza un Producto por cada elemento */}
       {productos.map((producto) => (
-        <Item 
-          key={producto.id} // key única para React (por hacer el map)
-          producto={producto} 
-          onDelete={onDelete} 
+        <Producto
+          key={producto.id}
+          producto={producto}
+          onEliminar={onEliminar}
+          onToggle={onToggle}
         />
       ))}
     </ul>
   );
 };
 
-export default List;
+export default Lista;

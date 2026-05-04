@@ -1,35 +1,34 @@
 import { useState } from "react";
 
-const Add = ({ onAdd }) => {
-  // Estado local para controlar el input
-  const [input, setInput] = useState("");
+const Añadir = ({ onAñadir }) => {
+  // Estado local para controlar el texto del input
+  const [texto, setTexto] = useState("");
 
-  const manejarEnvio = (e) => {
-    e.preventDefault(); // Evita que la página se recargue al pulsar el botón
-    
-    if (input.trim() !== "") {
-      onAdd(input); // Envio del texto a la App.jsx
-      setInput(""); // Limpieza del cajón para el siguiente producto
-    }
+  // Llama a la función del padre y limpia el input
+  const handleAñadir = () => {
+    onAñadir(texto);
+    setTexto("");
+  };
+
+  // Permite añadir pulsando Enter en vez del botón
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") handleAñadir();
   };
 
   return (
-    <form onSubmit={manejarEnvio} style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
+    <div className="add-section">
       <input
         type="text"
-        placeholder="¿Qué necesitas comprar?"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        style={{ flex: 1, padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }}
+        placeholder="Ej: Tomates..."
+        value={texto}
+        onChange={(e) => setTexto(e.target.value)}
+        onKeyDown={handleKeyDown}
       />
-      <button 
-        type="submit" 
-        style={{ padding: "8px 16px", cursor: "pointer", backgroundColor: "#007bff", color: "white", border: "none", borderRadius: "4px" }}
-      >
+      <button className="btn-add" onClick={handleAñadir}>
         Añadir
       </button>
-    </form>
+    </div>
   );
 };
 
-export default Add;
+export default Añadir;

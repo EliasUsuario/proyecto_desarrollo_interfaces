@@ -1,33 +1,19 @@
-const Item = ({ producto, onDelete }) => {
+const Producto = ({ producto, onEliminar, onToggle }) => {
   return (
-    <li style={{ 
-      display: "flex", 
-      justifyContent: "space-between", 
-      alignItems: "center",
-      padding: "12px",
-      borderBottom: "1px solid #eee",
-      backgroundColor: "#f9f9f9",
-      marginBottom: "5px",
-      borderRadius: "4px"
-    }}>
-      {/* Se muestra el nombre que viene dentro del objeto */}
-      <span>{producto.nombre}</span>
-      
-      <button 
-        onClick={() => onDelete(producto.id)}
-        style={{ 
-          backgroundColor: "#dc3545", 
-          color: "white", 
-          border: "none", 
-          padding: "5px 10px", 
-          cursor: "pointer", 
-          borderRadius: "4px" 
-        }}
-      >
-        Eliminar
+    // Si está comprado, añadimos la clase CSS "comprado" para tacharlo
+    <li className={`item ${producto.comprado ? "comprado" : ""}`}>
+
+      {/* Al hacer clic en el nombre se marca/desmarca como comprado */}
+      <span className="item-nombre" onClick={() => onToggle(producto.id)}>
+        {producto.comprado ? "✅" : "⬜"} {producto.name}
+      </span>
+
+      {/* Botón para eliminar este producto */}
+      <button className="btn-eliminar" onClick={() => onEliminar(producto.id)}>
+        ✕
       </button>
     </li>
   );
 };
 
-export default Item;
+export default Producto;

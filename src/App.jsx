@@ -1,50 +1,77 @@
 import { useState } from "react";
-import List from "./components/List";
-import Add from "./components/Add";
+import Lista from "./components/List";
+import Añadir from "./components/Add";
+import { productosIniciales } from "./constants.js";
 
 const App = () => {
-  // array vacío para la lista
-  const [productos, setProductos] = useState([]);
+  // Estado principal: array de productos
+  const [productos, setProductos] = useState(productosIniciales);
 
-  //Función para añadir productos
-  const agregarProducto = (nombreProducto) => {
-    // Limpieza espacios en blanco al principio y al final
-    const productoLimpio = nombreProducto.trim();
-    
-  const existe = productos.some((p) => p.nombre.toLowerCase() === productoLimpio.toLowerCase());
-    if (existe) {
-      alert("¡Ese producto ya está en la lista!");
-      return;
-    }
+  // Añade un producto nuevo si no está vacío ni repetido
+  const handleAñadir = (nombre) => {
+    const nombreLimpio = nombre.trim();
+    if (!nombreLimpio) return;
 
-    // Creamos el objeto del producto
+    const yaExiste = productos.some(
+      (p) => p.name.toLowerCase() === nombreLimpio.toLowerCase()
+    );
+    if (yaExiste) return;
+
     const nuevoProducto = {
-      id: Date.now(), // Usamos la fecha exacta en milisegundos como ID único
-      nombre: productoLimpio,
-      comprado: false
+      id: Date.now(), // Se usa la fecha como id único
+      name: nombreLimpio,
+      comprado: false,
     };
-
-    // Actualización del estado
     setProductos([...productos, nuevoProducto]);
   };
 
-  //Función para eliminar un producto concreto
-  const eliminarProducto = (id) => {
-    const nuevaLista = productos.filter((producto) => producto.id !== id);
-    setProductos(nuevaLista);
+  // Elimina el producto cuyo id coincida
+  const handleEliminar = (id) => {
+    setProductos(productos.filter((p) => p.id !== id));
+  };
+
+  // Cambia el estado comprado/no comprado de un producto
+  const handleToggle = (id) => {
+    setProductos(
+      productos.map((p) =>
+        p.id === id ? { ...p, comprado: !p.comprado } : p
+      )
+    );
+  };
+
+  // Vacía toda la lista
+  const handleVaciar = () => {
+    setProductos([]);
   };
 
   return (
-    <section style={{ padding: "20px", maxWidth: "400px", margin: "0 auto", fontFamily: "sans-serif" }}>
-      <h2>Lista de la Compra</h2>
-      
-      {/*función añadir al componente Add */}
-      <Add onAdd={agregarProducto} />
-      
-      {/*array de productos y función de borrar componente en List */}
-      <List productos={productos} onDelete={eliminarProducto} />
+    <div className="app">
+      <h1> Lista de la Compra</h1>
 
-    </section>
+      {/* Contador de productos totales y comprados */}
+      <p className="contador">
+        {productos.length} producto{productos.length !== 1 ? "s" : ""} en total ·{" "}
+        {productos.filter((p) => p.comprado).length} comprado
+        {productos.filter((p) => p.comprado).length !== 1 ? "s" : ""}
+      </p>
+
+      {/* Formulario para añadir */}
+      <Añadir onAñadir={handleAñadir} />
+
+      {/* Lista de productos */}
+      <Lista
+        productos={productos}
+        onEliminar={handleEliminar}
+        onToggle={handleToggle}
+      />
+
+      {/* Botón vaciar, solo se muestra si hay productos */}
+      {productos.length > 0 && (
+        <button className="btn-vaciar" onClick={handleVaciar}>
+        Vaciar lista
+        </button>
+      )}
+    </div>
   );
 };
 

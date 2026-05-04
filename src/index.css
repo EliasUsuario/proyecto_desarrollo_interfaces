@@ -1,0 +1,58 @@
+* {
+   box-sizing: border-box; 
+   margin: 0; 
+   padding: 0; 
+   font-family: sans-serif; 
+  }
+
+body { 
+  background: #f0f4f8; 
+  display: flex; 
+  justify-content: center; 
+  padding: 20px; 
+}
+
+/* Contenedor principal */
+.app { 
+  background: white; 
+  padding: 20px; 
+  border-radius: 8px; 
+  width: 100%; 
+  max-width: 400px; 
+}
+
+/* Inputs y botones */
+input, button { 
+  padding: 10px; 
+  border-radius: 5px; 
+  border: 1px solid #ccc; 
+}
+
+.add-section { display: flex; gap: 5px; margin: 15px 0; }
+.add-section input { flex: 1; }
+
+.btn-add { background: #48bb78; color: white; border: none; }
+
+/* Lista de ítems */
+.lista { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+
+.item { 
+  display: flex; 
+  justify-content: space-between; 
+  background: #f9f9f9; 
+  padding: 8px; 
+  border: 1px solid #eee; 
+}
+
+.comprado { opacity: 0.5; text-decoration: line-through; }
+
+/* Botones de acción */
+.btn-eliminar { color: red; border: none; background: none; cursor: pointer; }
+
+.btn-vaciar { 
+  width: 100%; 
+  margin-top: 15px; 
+  border: 1px solid red; 
+  color: red; 
+  background: white; 
+}
