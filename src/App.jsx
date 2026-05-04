@@ -46,7 +46,7 @@ const App = () => {
 
   return (
     <div className="app">
-      <h1> Lista de la Compra</h1>
+      <h1>🛒 Lista de la Compra</h1>
 
       {/* Contador de productos totales y comprados */}
       <p className="contador">
@@ -68,7 +68,7 @@ const App = () => {
       {/* Botón vaciar, solo se muestra si hay productos */}
       {productos.length > 0 && (
         <button className="btn-vaciar" onClick={handleVaciar}>
-        Vaciar lista
+          🗑️ Vaciar lista
         </button>
       )}
     </div>
